@@ -28,8 +28,12 @@ https://github.com/aj-pena/Code-Quiz.git
 
 ## Workflow
 FIRST, I will complete the index.html file.
-    I have completed the skeleton: ![Screenshot of Index.html](Assets/Images/Indexhtml.PNG)
+I have completed the skeleton: 
+![Screenshot of Index.html](Assets/Images/Indexhtml.PNG)
+
 SECOND, I will work on the JavaScript side of things, powered by JQuery.
+
+
 THIRD, I will power the styling with bootstrap.
 
 ![alt text] (assets/images/photoname.png)
