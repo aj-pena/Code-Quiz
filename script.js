@@ -10,12 +10,12 @@ let secondsRemaining = 10;
 // Start quiz
 function startQuiz() {
     // hides start button
-    startBtn.style.visibility = 'hidden';
-   
+    startBtn.style.visibility = 'hidden';   
     // initializes timer
     timer.innerText = secondsRemaining + ' seconds remaining';
     setTime();
     // writes first question
+    renderQuestions();
 
 }
 // Timer function
@@ -32,8 +32,12 @@ function setTime(){
     
 }
 
-// Writes questions function
-function questions(){}
+// Rendering questions to the card-quiz div
+function renderQuestions(){
+    let index = 0;
+    title.innerText = questions[index].question;
+    
+}
 
 // End of quiz high scores storage
 function saveScore(){
@@ -54,7 +58,37 @@ function saveScore(){
 }
 
 
-// Questions array
+// List of questions
+let questions = [
+    {
+        question : 'JavaScript is used for', 
+        choiceA : 'Creating the text content of the webpage',
+        choiceB : 'Styling the conent of the webpage',
+        choiceC : 'Powering the functionality of the webpage and making it interactive',
+        correct: 'C',
+    },
+    {
+        question : 'What does the DOM stands for?', 
+        choiceA : 'Deviously Orchestrated Machine',
+        choiceB : 'Document Object Model',
+        choiceC : 'Drive Orto Model',
+        correct: 'B',
+    },
+    {
+        question : 'What does the -Document- object refer to', 
+        choiceA : 'The webpage HTML Focument',
+        choiceB : 'The README text document associated with the repository',
+        choiceC : 'The Javascript code document',
+        correct: 'A',
+    },
+    {
+        question : 'With JavaScript, it is possible to', 
+        choiceA : 'Create dynamic documents that change depending on user and/or server input',
+        choiceB : 'Access APIs and server data to power the web application capabilites',
+        choiceC : 'Both A and B',
+        correct: 'C',
+    }
+]
 
 
 // Counter
