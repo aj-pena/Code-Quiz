@@ -6,8 +6,9 @@ let quiz = document.getElementById('card-quiz');
 let startBtn = document.getElementById('start');
 let results = document.getElementById('results');
 let answer = '';
+let index = 0;
 
-let secondsRemaining = 30;
+let secondsRemaining = 45;
 
 // List of questions
 let questions = [
@@ -27,7 +28,7 @@ let questions = [
     },
     {
         question : 'What does the -Document- object refer to', 
-        choiceA : 'The webpage HTML Focument',
+        choiceA : 'The webpage HTML document',
         choiceB : 'The README text document associated with the repository',
         choiceC : 'The Javascript code document',
         correct: 'A',
@@ -40,6 +41,7 @@ let questions = [
         correct: 'C',
     }
 ];
+
 
 // Start quiz
 function startQuiz() {
@@ -63,11 +65,14 @@ function setTime(){
             saveScore();
         }
     },1000);
+    if(secondsRemaining == 0){
+        saveScore;
+    }
     
 }
 
 // Rendering questions to the card-quiz div
-function renderQuestions(index){
+function renderQuestions(){
         
     title.innerText = questions[index].question;
     intro.innerText = '';
@@ -105,27 +110,52 @@ function renderQuestions(index){
     quiz.appendChild(br2);
     quiz.appendChild(btnC);
     quiz.appendChild(pC);
+    
+    // Event listeners for Choices buttons that assign value to -Answer- variable and calls on checkAnswer()
+    btnA.addEventListener('click',function(){
+        answer = 'A';
+        console.log(answer);
+        checkAnswer();
+    });
+    btnB.addEventListener('click',function(){
+        answer = 'B';
+        console.log(answer);
+        checkAnswer();
+    });
+    btnC.addEventListener('click',function(){
+        answer = 'C';
+        console.log(answer);
+        checkAnswer();
+    });
+    
 }
 
 // Check answer
 function checkAnswer(){
     // creates h3 element
     let h3Results = document.createElement('h3');
-    if (answer === correct){    
-    // populates h3 element
-    h3Results.innerText = 'Answer is correct!'
+    if (answer == questions[index].correct){    
+        // populates h3 element 
+        h3Results.innerText = 'Answer is correct!'
+               
+    } else {
+        // populates h3 element
+        h3Results.innerText = 'Answer is wrong :(';
+        secondsRemaining -= 5;
+    }
     // appends h3 element to -results- div
     results.appendChild(h3Results);
+    
+    setTimeout(function(){
+        index ++
+        quiz.innerHTML = '';
+        results.innerHTML = '';
+        renderQuestions();
+    },3000)
+    
 }
-// populates h3 element
-h3Results.innerText = 'Answer is wrong :('
-// appends h3 element to -results- div
-results.appendChild(h3Results);
-
-}
 
 
-// Writes assessing message
 
 
 // End of quiz high scores storage
@@ -134,6 +164,7 @@ function saveScore(){
     title.innerText = 'All Done!';
     intro.innerText = 'Click save for saving your score or clear all to clear all score history';
     timer.innerText = '';
+    quiz.innerHTML = '';
 
     // Create and Append input field to save name
    let input = document.createElement('input');
@@ -154,7 +185,3 @@ function saveScore(){
 // Event listener for Start Button
 startBtn.addEventListener('click' , startQuiz);
 
-// Event listener for Choices buttons that assign value to -Answer- variable
-btnA.addEventListener('click',function(){answer = 'A'});
-btnB.addEventListener('click',function(){answer = 'B'});
-btnC.addEventListener('click',function(){answer = 'C'});
