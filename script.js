@@ -7,6 +7,7 @@ let startBtn = document.getElementById('start');
 let results = document.getElementById('results');
 let answer = '';
 let index = 0;
+let questionNumber = 0;
 
 let secondsRemaining = 45;
 
@@ -60,15 +61,12 @@ function setTime(){
     let counter = setInterval(function(){
         secondsRemaining --;
         timer.innerText = secondsRemaining + ' seconds remaining';
-        if(secondsRemaining == 0){           
+        if(secondsRemaining == 0 || questionNumber == questions.length){           
             clearInterval(counter);
             saveScore();
         }
     },1000);
-    if(secondsRemaining == 0){
-        saveScore;
-    }
-    
+       
 }
 
 // Rendering questions to the card-quiz div
@@ -147,16 +145,15 @@ function checkAnswer(){
     results.appendChild(h3Results);
     
     setTimeout(function(){
-        index ++
+        index ++;
+        questionNumber ++;
+        title.innerText = '';
         quiz.innerHTML = '';
         results.innerHTML = '';
         renderQuestions();
-    },3000)
+    },1000)
     
 }
-
-
-
 
 // End of quiz high scores storage
 function saveScore(){
@@ -176,11 +173,6 @@ function saveScore(){
 
 
 }
-
-
-// Answer is correct
-
-// Answer is wrong
 
 // Event listener for Start Button
 startBtn.addEventListener('click' , startQuiz);
