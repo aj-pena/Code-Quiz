@@ -8,6 +8,8 @@ let results = document.getElementById('results');
 let answer = '';
 let index = 0;
 let questionNumber = 0;
+let userName ='';
+let userScore ='';
 
 let secondsRemaining = 45;
 
@@ -46,6 +48,8 @@ let questions = [
 
 // Start quiz
 function startQuiz() {
+    // clears local storage
+    window.localStorage.clear();
     // hides start button
     startBtn.style.visibility = 'hidden';   
     // initializes timer
@@ -62,6 +66,7 @@ function setTime(){
         secondsRemaining --;
         timer.innerText = secondsRemaining + ' seconds remaining';
         if(secondsRemaining == 0 || questionNumber == questions.length){           
+            
             clearInterval(counter);
             saveScore();
         }
@@ -139,7 +144,7 @@ function checkAnswer(){
     } else {
         // populates h3 element
         h3Results.innerText = 'Answer is wrong :(';
-        secondsRemaining -= 5;
+        secondsRemaining -= 10;
     }
     // appends h3 element to -results- div
     results.appendChild(h3Results);
@@ -157,9 +162,10 @@ function checkAnswer(){
 
 // End of quiz high scores storage
 function saveScore(){
+    userScore = secondsRemaining;
     // Display of message
     title.innerText = 'All Done!';
-    intro.innerText = 'Click save for saving your score or clear all to clear all score history';
+    intro.innerText = 'Your score is:' + ' ' + userScore + '. ' + 'Click save for saving your score or clear all to clear all score history';
     timer.innerText = '';
     quiz.innerHTML = '';
 
@@ -167,10 +173,55 @@ function saveScore(){
    let input = document.createElement('input');
    input.setAttribute('placeholder','Enter Name here');
    input.setAttribute('type','Text');
+   input.style.marginLeft = '0.5%';
+   input.style.display = 'block';
     quiz.append(input);
 
     // Create and Append 'Save' and 'Clear All' buttons
+    let save = document.createElement("button");
+    let clear = document.createElement("button");
+    save.setAttribute('id', 'save-btn');
+    save.innerText = 'Save';
+    save.style.marginLeft = '0.5%';
+    save.style.marginTop = '1%';
+    clear.setAttribute('id','clear-btn');
+    clear.innerText = 'Clear All';
+    clear.style.marginLeft = '1%';
+    clear.style.marginTop = '1%';
+    quiz.append(save);
+    quiz.append(clear);    
+    
+    //Event listeners for save and clear all
+    save.addEventListener('click', function(){
+        userName = input.value;
+        window.localStorage.setItem('name',userName);
+        window.localStorage.setItem('score', userScore);
+        showScores(); 
+    });
+    clear.addEventListener('click', function(){
+        window.localStorage.clear();
+        let mssg = document.createElement('h4');
+        mssg.innerText = 'Your history has been cleared. Have a nice day!'
+        title.innerHTML= '';
+        intro.innerHTML= '';
+        quiz.innerHTML = '';        
+        quiz.append(mssg);
+    }); 
 
+    
+}
+
+function showScores() {
+    title.innerHTML='Your Highscores:';
+    intro.innerHTML='';
+    quiz.innerHTML='';
+    for(let i = 0; i < localStorage.length; i++ ){
+        let line = document.createElement('p');
+        let key = localStorage.key(i);
+        let item = localStorage.getItem(key);
+        line.innerHTML = key + ' : ' + item;
+        quiz.appendChild(line);
+    }
 
 }
 
