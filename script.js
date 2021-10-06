@@ -1,16 +1,16 @@
 // Select elements
-let timer = document.getElementById('timer');
-let title = document.getElementById('title');
-let intro = document.getElementById('intro');
-let quiz = document.getElementById('card-quiz');
-let startBtn = document.getElementById('start');
-let results = document.getElementById('results');
+const timer = document.getElementById('timer');
+const title = document.getElementById('title');
+const intro = document.getElementById('intro');
+const quiz = document.getElementById('card-quiz');
+const startBtn = document.getElementById('start');
+const results = document.getElementById('results');
 let answer = '';
 let index = 0;
 let questionNumber = 0;
-let userName ='';
+let userName = '';
 let userScore ='';
-
+let usersArray = [];
 let secondsRemaining = 45;
 
 // List of questions
@@ -47,9 +47,7 @@ let questions = [
 
 
 // Start quiz
-function startQuiz() {
-    // clears local storage
-    window.localStorage.clear();
+function startQuiz() {    
     // hides start button
     startBtn.style.visibility = 'hidden';   
     // initializes timer
@@ -91,10 +89,13 @@ function renderQuestions(){
     // creates buttons
     let btnA = document.createElement('button');
     btnA.innerText = 'A';
+    btnA.setAttribute('class','btn');
     let btnB = document.createElement('button');
     btnB.innerText = 'B';
+    btnB.setAttribute('class','btn');
     let btnC = document.createElement('button');
     btnC.innerText = 'C';
+    btnC.setAttribute('class','btn');
 
     // creates a line-break elements
     let br1 = document.createElement('br');
@@ -181,6 +182,7 @@ function saveScore(){
     let save = document.createElement("button");
     let clear = document.createElement("button");
     save.setAttribute('id', 'save-btn');
+    save.setAttribute('class', 'btn');
     save.innerText = 'Save';
     save.style.marginLeft = '0.5%';
     save.style.marginTop = '1%';
@@ -193,9 +195,14 @@ function saveScore(){
     
     //Event listeners for save and clear all
     save.addEventListener('click', function(){
+        
         userName = input.value;
-        window.localStorage.setItem('name',userName);
-        window.localStorage.setItem('score', userScore);
+        usersArray.push({
+            user : userName,
+            score : userScore,
+        });
+        window.localStorage.setItem('userScores', JSON.stringify(usersArray));  //is not pushing new objects into the local storage array. Instead, it is overwritting them.
+        
         showScores(); 
     });
     clear.addEventListener('click', function(){
@@ -210,16 +217,22 @@ function saveScore(){
 
     
 }
-
+// Function that renders history of scores
 function showScores() {
     title.innerHTML='Your Highscores:';
     intro.innerHTML='';
     quiz.innerHTML='';
-    for(let i = 0; i < localStorage.length; i++ ){
-        let line = document.createElement('p');
-        let key = localStorage.key(i);
-        let item = localStorage.getItem(key);
-        line.innerHTML = key + ' : ' + item;
+    let retrievedArray = JSON.parse(localStorage.getItem('userScores'));
+    for(let i = 0; i < retrievedArray.length; i++ ){
+        let headings = document.createElement('p');
+        headings.innerHTML = 'Name   :   Score';
+        headings.style.marginLeft ='35%';                    
+        let line = document.createElement('p');     //* Is not rendering the spaces correctly around the colon
+        let r = retrievedArray[i].user;
+        let s = retrievedArray[i].score;
+        line.innerHTML = r + ' :  ' + s;
+        line.style.marginLeft ='35%'; 
+        quiz.appendChild(headings);
         quiz.appendChild(line);
     }
 
