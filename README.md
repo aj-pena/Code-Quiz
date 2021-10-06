@@ -33,13 +33,13 @@ THIRD, I will power the styling with custom CSS.
 ![alt text] (assets/images/photoname.png)
 
 This aplication starts with an intro page:
-![The user will click start to start the quiz](Assets/Images/StartQuiz.png)
+![The user will click start to start the quiz](Assets/Images/StartQuiz.PNG)
 Then continues into the questioning stage:
-![When the user clicks start, the timer will initialize and multiple choice questions will be renderd](Assets/Images/Question1.png)
+![When the user clicks start, the timer will initialize and multiple choice questions will be renderd](Assets/Images/Question1.PNG)
 When questions are finished it will ask the user wether to save the score or clear history
-![After responding all questions, the user will be asked to save or clear the score](Assets/Images/AllDone.png)
+![After responding all questions, the user will be asked to save or clear the score](Assets/Images/AllDone.PNG)
 If the user chooses to save, the highscores will be shown to the user
-![Once the user saves the scores, the highscores will be shown to the user](Assets/Images/Highscores.png)
+![Once the user saves the scores, the highscores will be shown to the user](Assets/Images/Highscores.PNG)
 
 
 ## Challenges
